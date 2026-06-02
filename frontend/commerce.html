@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Terminal de Punto de Venta - Comercio{% endblock %}
+
+{% block content %}
+<div class="nav" style="background: var(--accent);">
+    <span>Terminal Comercial Adherido: <strong>{{ session['username'] | capitalize }}</strong></span>
+    <a href="{{ url_for('auth.logout') }}" class="logout">Desconectar TPV</a>
+</div>
+
+<h2>Arqueo de Caja (Depósitos Recibidos)</h2>
+<div class="grid">
+    <div class="card" style="border-top: 4px solid var(--accent);">
+        <h3>Volumen de Tokens Acumulados</h3>
+        <div class="balance">
+            <span id="saldo-comercio">{{ balance_basica }}</span> 
+            <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>
+        </div>
+        <span class="badge" style="background:#e0f2fe; color:#0284c7;">Pendientes de Liquidación Fiscal</span>
+    </div>
+</div>
+
+<div class="form-section" style="border-left: 6px solid var(--state);">
+    <h3 style="color: var(--primary-dark); margin-top: 0; margin-bottom: 10px;">Protocolo de Liquidación en Arcas Públicas</h3>
+    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px;">
+        Al liquidar sus fondos, el contrato inteligente transferirá el balance íntegro a la Hacienda Municipal. El Estado emitirá certificados de exención fiscal correspondientes y procederá a re-firmar los activos digitalmente para cerrar el ciclo de la economía circular.
+    </p>
+    
+    <form action="{{ url_for('auth.liquidar') }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" style="background-color: var(--state);">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M16 18v-9"/><path d="M12 18v-9"/><path d="M8 18v-9"/><path d="M3 9l9-7 9 7v0H3z"/></svg>
+            Liquidar Caja y Solicitar Exenciones
+        </button>
+    </form>
+</div>
+
+<script>
+    setInterval(() => {
+        fetch('/api/estado_en_vivo')
+            .then(response => response.json())
+            .then(data => {
+                if(!data.error) {
+                    document.getElementById('saldo-comercio').innerText = data.basicas.toFixed(2);
+                }
+            });
+    }, 1000);
+</script>
+{% endblock %}

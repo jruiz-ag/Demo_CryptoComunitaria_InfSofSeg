@@ -1,0 +1,28 @@
+{
+    "usuarios": {
+        "alice": {
+            "password_hash": "$2b$12$fWV.RhmQpOFdnwZ4e5OJH.ioEeRvGAuyE0Ye6nDjsfVvwSbF0ixp6",
+            "role": "citizen",
+            "basicas": [{"monto": 100.0}],
+            "bonificadas": 50.0
+        },
+        "bob": {
+            "password_hash": "$2b$12$vo7iA0lpx/35aoa3f0u3SesnBOT.z6ORdmzxJaxRlslSfJT1.jBy.",
+            "role": "citizen",
+            "basicas": [{"monto": 100.0}],
+            "bonificadas": 50.0
+        },
+        "comercio_local": {
+            "password_hash": "$2b$12$/e/vM2V6YefeIJuVQsOD1OsFWk9EGn3lMgEYJ4qc.7zMHXW1Saqai",
+            "role": "commerce",
+            "basicas": [{"monto": 0.0}],
+            "bonificadas": 0.0
+        },
+        "estado": {
+            "password_hash": "$2b$12$W5L43xTugLzSYhX5dsMZaelued4FH9AmaCzF2ib7IL6s1.8Dr9HIa",
+            "role": "state",
+            "basicas": [],
+            "bonificadas": 1700.0
+        }
+    }
+}
