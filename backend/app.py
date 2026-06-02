@@ -26,12 +26,13 @@ csrf.init_app(app)
 # force_https=False y strict_transport_security=False para demo local sin TLS
 SELF_POLICY = "'self'"
 csp = {
-    'default-src': "SELF_POLICY",
-    'script-src':  ["SELF_POLICY", "'unsafe-inline'"],
-    'style-src':   ["SELF_POLICY", "'unsafe-inline'", 'fonts.googleapis.com'],
+    'default-src': SELF_POLICY,  # <-- Sin comillas para usar la variable
+    'script-src':  [SELF_POLICY, "'unsafe-inline'"],
+    'style-src':   [SELF_POLICY, "'unsafe-inline'", 'fonts.googleapis.com'],
     'font-src':    ['fonts.gstatic.com', 'fonts.googleapis.com'],
-    'img-src':     ["SELF_POLICY", 'data:'],
+    'img-src':     [SELF_POLICY, 'data:'],
 }
+
 Talisman(
     app,
     force_https=False,
