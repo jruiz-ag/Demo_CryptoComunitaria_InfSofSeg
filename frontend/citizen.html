@@ -2,6 +2,67 @@
 {% block title %}Mi Billetera - Ciudadano{% endblock %}
 
 {% block content %}
+<style>
+    /* Cuadrícula de Datos de Alta Fidelidad */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+    .balance-card {
+        background: radial-gradient(circle at top left, var(--bg-surface-elevated), var(--bg-surface));
+        border: 1px solid var(--border-color);
+        padding: 24px;
+        border-radius: var(--radius-lg);
+        position: relative;
+        overflow: hidden;
+    }
+    .balance-value {
+        font-family: var(--font-mono);
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 12px 0 4px 0;
+        letter-spacing: -0.03em;
+    }
+    .crypto-address {
+        font-family: var(--font-mono);
+        background: rgba(0,0,0,0.2);
+        padding: 8px 12px;
+        border-radius: var(--radius-md);
+        font-size: 0.8rem;
+        color: var(--accent);
+        word-break: break-all;
+        border: 1px solid rgba(255,255,255,0.03);
+    }
+    /* Estructuras de Listas de Auditoría */
+    .tx-ledger-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 16px;
+    }
+    .tx-row {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .signature-badge {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    .signature-badge.valid {
+        background-color: var(--success-glow);
+        color: #10b981;
+    }
+</style>
 <div class="nav">
     <span>Identidad Verificada: <strong>{{ session['username'] | capitalize }}</strong></span>
     <a href="{{ url_for('auth.logout') }}" class="logout">Desconectar Sesión Segura</a>

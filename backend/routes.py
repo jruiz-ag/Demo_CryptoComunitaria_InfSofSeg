@@ -36,24 +36,44 @@ def index():
     return render_template('login.html')
 
 
-@auth_bp.route('/login/<username>', methods=['GET'])
-@limiter.limit("15 per minute")   # ── SEGURIDAD 4: evitar enumeración de usuarios
-def login(username):
+@auth_bp.route('/login', methods=['POST'])
+@limiter.limit("10 per minute")
+def login():
     """
-    ── NOTA DE SEGURIDAD (DEMO ONLY) ─────────────────────────────────────────
-    Login por clic sin contraseña, pensado para presentaciones.
-    En producción se verificaría: bcrypt.checkpw(pw, user['password_hash'])
-    ──────────────────────────────────────────────────────────────────────────
+    Manejador perimetral de autenticación segura.
+    Valida la existencia de parámetros, ejecuta la lógica DbC y previene la Fijación de Sesión.
     """
-    user = economy.USUARIOS_DB.get(username)
-    if user:
-        session['username'] = username
-        session['role'] = user['role']
+    username = request.form.get('username', '').strip()
+    password = request.form.get('password', '')
+
+    if not username or not password:
+        flash("Credenciales de acceso incompletas.", "error")
         return redirect(url_for(INDEX_ENDPOINT))
 
-    flash("Usuario no encontrado en la base de datos de la demo.", "error")
-    return redirect(url_for(INDEX_ENDPOINT))
+    # Importamos la nueva función robusta con tolerancia a fallos criptográficos
+    from auth_utils import verificar_credenciales_robusto
+    import economy
 
+    try:
+        exito, rol, mensaje = verificar_credenciales_robusto(username, password, economy.USUARIOS_DB)
+        
+        if exito:
+            # CONTRAMEDIDA SESSION FIXATION: Rotación completa de identificadores de sesión
+            session.clear()
+            
+            session['username'] = username.lower()
+            session['role'] = rol
+            flash(f"Conexión criptográfica establecida. Bienvenido, {username.capitalize()}.", "success")
+            return redirect(url_for(INDEX_ENDPOINT))
+        
+        # Si no tiene éxito, mostramos el motivo exacto (Bloqueo FSM o datos incorrectos)
+        flash(mensaje, "error")
+            
+    except Exception as e:
+        flash("Fallo crítico en el procesamiento del contrato lógicos de entrada.", "error")
+        return redirect(url_for(INDEX_ENDPOINT))
+
+    return redirect(url_for(INDEX_ENDPOINT))
 
 @auth_bp.route('/transferir', methods=['POST'])
 @login_required

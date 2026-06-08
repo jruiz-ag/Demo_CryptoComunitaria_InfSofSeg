@@ -1,61 +1,117 @@
 {% extends 'base.html' %}
-{% block title %}Portal de Autenticación - Economía Municipal{% endblock %}
+{% block title %}Acceso Perimetral Autenticado{% endblock %}
 
 {% block content %}
-<div style="text-align: center; margin-bottom: 40px; padding: 20px 0;">
-    <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Nodo de Pruebas Criptográficas</h1>
-    <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
-        Selecciona un perfil de usuario para acceder a la demostración interactiva de la red distribuida y visualizar la arquitectura de monederos en tiempo real.
-    </p>
-</div>
+<style>
+    .login-wrapper {
+        max-width: 480px;
+        margin: 40px auto;
+    }
+    .input-group {
+        margin-bottom: 20px;
+    }
+    .input-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+    }
+    .input-group input {
+        width: 100%;
+        background-color: var(--bg-surface-elevated);
+        border: 1px solid var(--border-color);
+        padding: 14px;
+        border-radius: var(--radius-md);
+        color: white;
+        font-size: 1rem;
+        font-family: var(--font-mono);
+    }
+    .input-group input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+    .demo-badge-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 24px;
+    }
+    .demo-btn {
+        background: var(--bg-surface-elevated);
+        border: 1px solid var(--border-color);
+        padding: 14px;
+        border-radius: var(--radius-md);
+        color: var(--text-main);
+        cursor: pointer;
+        text-align: left;
+        font-size: 0.9rem;
+    }
+    .demo-btn:hover {
+        border-color: var(--accent);
+        background-color: rgba(0, 240, 255, 0.03);
+    }
+    .tech-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+    .tech-header h1 {
+        font-size: 2rem;
+        background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+    }
+</style>
 
-<div style="display: grid; gap: 20px; max-width: 500px; margin: 0 auto;">
-    
-    <a href="{{ url_for('auth.login', username='alice') }}" style="background: white; border: 1px solid var(--border-color); padding: 20px; text-decoration: none; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s;">
-        <div style="background: #e0f2fe; color: #0284c7; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-            <svg class="icon-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
-        <div>
-            <div style="font-weight: 700; color: var(--primary-dark); font-size: 1.1rem;">Acceso Ciudadano (Alice)</div>
-            <div style="color: var(--text-muted); font-size: 0.875rem;">Monedero personal estándar</div>
-        </div>
-    </a>
-    
-    <a href="{{ url_for('auth.login', username='bob') }}" style="background: white; border: 1px solid var(--border-color); padding: 20px; text-decoration: none; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s;">
-        <div style="background: #e0f2fe; color: #0284c7; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-            <svg class="icon-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
-        <div>
-            <div style="font-weight: 700; color: var(--primary-dark); font-size: 1.1rem;">Acceso Ciudadano (Bob)</div>
-            <div style="color: var(--text-muted); font-size: 0.875rem;">Monedero personal estándar</div>
-        </div>
-    </a>
+<div class="login-wrapper">
+    <div class="tech-header">
+        <h1>NODO GENERAL DE ACCESO</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Capa Perimetral Verificada por Contratos de Validación Sintáctica</p>
+    </div>
 
-    <a href="{{ url_for('auth.login', username='comercio_local') }}" style="background: white; border: 1px solid var(--border-color); padding: 20px; text-decoration: none; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s;">
-        <div style="background: #fef3c7; color: #d97706; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-            <svg class="icon-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
-        </div>
-        <div>
-            <div style="font-weight: 700; color: var(--primary-dark); font-size: 1.1rem;">Panel de Comercio Local</div>
-            <div style="color: var(--text-muted); font-size: 0.875rem;">Recepción de pagos y liquidación</div>
-        </div>
-    </a>
+    <div class="crypto-card">
+        <form action="{{ url_for('auth.login') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
+            <div class="input-group">
+                <label for="username">Identificador de Usuario (Username)</label>
+                <input type="text" id="username" name="username" required autocomplete="off"
+                       pattern="^[a-zA-Z0-9_-]{3,32}$"
+                       title="Restricción: Entre 3 y 32 caracteres alfanuméricos permitidos en lista blanca.">
+            </div>
 
-    <a href="{{ url_for('auth.login', username='estado') }}" style="background: white; border: 1px solid var(--border-color); padding: 20px; text-decoration: none; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s; border-left: 4px solid var(--state);">
-        <div style="background: #ede9fe; color: #7c3aed; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-            <svg class="icon-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M16 18v-9"/><path d="M12 18v-9"/><path d="M8 18v-9"/><path d="M3 9l9-7 9 7v0H3z"/></svg>
+            <div class="input-group">
+                <label for="password">Clave de Acceso Secreta (Password)</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn-secure" style="width: 100%;">
+                Verificar Credenciales e Iniciar Sesión
+            </button>
+        </form>
+    </div>
+
+    <div style="margin-top: 32px;">
+        <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); text-align: center; letter-spacing: 0.05em; margin-bottom: 16px;">
+            Inyector de Tokens de Identidad (Modo de Demostración)
+        </h3>
+        <div class="demo-badge-grid">
+            <button class="demo-btn" onclick="inject('alice')">👤 <strong>Alice</strong><br><span style="font-size:0.75rem; color:var(--text-muted)">Citizen Perfil</span></button>
+            <button class="demo-btn" onclick="inject('bob')">👤 <strong>Bob</strong><br><span style="font-size:0.75rem; color:var(--text-muted)">Citizen Perfil</span></button>
+            <button class="demo-btn" onclick="inject('comercio_local')">🏪 <strong>Comercio</strong><br><span style="font-size:0.75rem; color:var(--text-muted)">Commerce Perfil</span></button>
+            <button class="demo-btn" onclick="inject('estado')" style="border-left: 3px solid var(--state-purple);">🏛️ <strong>Estado</strong><br><span style="font-size:0.75rem; color:var(--state-purple)">State Root</span></button>
         </div>
-        <div>
-            <div style="font-weight: 700; color: var(--primary-dark); font-size: 1.1rem;">Administración del Estado</div>
-            <div style="color: var(--text-muted); font-size: 0.875rem;">Auditoría, tesoro y emisión de bonos</div>
-        </div>
-    </a>
+    </div>
 </div>
 
 <script>
-    document.querySelectorAll('a').forEach(btn => {
-        btn.addEventListener('mouseover', () => { btn.style.transform = 'translateY(-2px)'; btn.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)'; });
-        btn.addEventListener('mouseout', () => { btn.style.transform = 'none'; btn.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; });
-    });
+    function inject(user) {
+        document.getElementById('username').value = user;
+        document.getElementById('password').value = 'password123';
+    }
 </script>
 {% endblock %}
