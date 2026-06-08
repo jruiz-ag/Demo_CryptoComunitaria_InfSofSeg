@@ -4,41 +4,32 @@
 {% block content %}
 <style>
     .login-wrapper {
-        max-width: 480px;
-        margin: 40px auto;
+        max-width: 460px;
+        margin: 60px auto;
     }
-    .input-group {
-        margin-bottom: 20px;
+    .tech-header {
+        text-align: center;
+        margin-bottom: 35px;
     }
-    .input-group label {
-        display: block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 8px;
-        color: var(--text-muted);
+    .tech-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: var(--text-main);
+        margin-bottom: 10px;
     }
-    .input-group input {
-        width: 100%;
-        background-color: var(--bg-surface-elevated);
-        border: 1px solid var(--border-color);
-        padding: 14px;
-        border-radius: var(--radius-md);
-        color: white;
-        font-size: 1rem;
-        font-family: var(--font-mono);
-    }
-    .input-group input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px var(--primary-glow);
+    .crypto-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-light);
+        padding: 40px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--relief-lg);
     }
     .demo-badge-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-top: 24px;
+        gap: 14px;
+        margin-top: 20px;
     }
     .demo-btn {
         background: var(--bg-surface-elevated);
@@ -48,29 +39,26 @@
         color: var(--text-main);
         cursor: pointer;
         text-align: left;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        box-shadow: var(--relief-sm);
+        transition: all 0.15s ease;
     }
     .demo-btn:hover {
-        border-color: var(--accent);
-        background-color: rgba(0, 240, 255, 0.03);
+        border-color: var(--primary);
+        background-color: var(--bg-surface);
+        transform: translateY(-1px);
+        box-shadow: var(--relief-md);
     }
-    .tech-header {
-        text-align: center;
-        margin-bottom: 32px;
-    }
-    .tech-header h1 {
-        font-size: 2rem;
-        background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 8px;
+    .demo-btn:active {
+        transform: translateY(1px);
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
     }
 </style>
 
 <div class="login-wrapper">
     <div class="tech-header">
-        <h1>NODO GENERAL DE ACCESO</h1>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">Capa Perimetral Verificada por Contratos de Validación Sintáctica</p>
+        <h1>Nodo General de Acceso</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">Infraestructura de Validación Sintáctica</p>
     </div>
 
     <div class="crypto-card">
@@ -89,21 +77,21 @@
                 <input type="password" id="password" name="password" required>
             </div>
 
-            <button type="submit" class="btn-secure" style="width: 100%;">
-                Verificar Credenciales e Iniciar Sesión
+            <button type="submit" style="width: 100%; margin-top: 10px;">
+                Autenticar e Ingresar
             </button>
         </form>
     </div>
 
-    <div style="margin-top: 32px;">
-        <h3 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); text-align: center; letter-spacing: 0.05em; margin-bottom: 16px;">
-            Inyector de Tokens de Identidad (Modo de Demostración)
+    <div style="margin-top: 35px; background: var(--bg-surface); border: 1px solid var(--border-light); padding: 24px; border-radius: var(--radius-lg); box-shadow: var(--relief-lg);">
+        <h3 style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); text-align: center; letter-spacing: 0.06em; font-weight: 700;">
+            Perfiles de Acceso Rápido
         </h3>
         <div class="demo-badge-grid">
             <button class="demo-btn" onclick="inject('alice')">👤 <strong>Alice</strong><br><span style="font-size:0.75rem; color:var(--text-muted)">Citizen Perfil</span></button>
             <button class="demo-btn" onclick="inject('bob')">👤 <strong>Bob</strong><br><span style="font-size:0.75rem; color:var(--text-muted)">Citizen Perfil</span></button>
             <button class="demo-btn" onclick="inject('comercio_local')">🏪 <strong>Comercio</strong><br><span style="font-size:0.75rem; color:var(--text-muted)">Commerce Perfil</span></button>
-            <button class="demo-btn" onclick="inject('estado')" style="border-left: 3px solid var(--state-purple);">🏛️ <strong>Estado</strong><br><span style="font-size:0.75rem; color:var(--state-purple)">State Root</span></button>
+            <button class="demo-btn" onclick="inject('estado')" style="border-left: 4px solid var(--state-purple);">🏛️ <strong>Estado</strong><br><span style="font-size:0.75rem; color:var(--state-purple)">State Root</span></button>
         </div>
     </div>
 </div>

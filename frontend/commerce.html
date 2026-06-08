@@ -3,94 +3,53 @@
 
 {% block content %}
 <style>
-    /* Cuadrícula de Datos de Alta Fidelidad */
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 24px;
-        margin-bottom: 32px;
+    .commerce-nav {
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+        border-color: #0f172a !important;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15), inset 0 1px 0 rgba(255,255,255,0.1) !important;
     }
-    .balance-card {
-        background: radial-gradient(circle at top left, var(--bg-surface-elevated), var(--bg-surface));
-        border: 1px solid var(--border-color);
-        padding: 24px;
-        border-radius: var(--radius-lg);
-        position: relative;
-        overflow: hidden;
+    .commerce-nav span, .commerce-nav strong {
+        color: white !important;
     }
-    .balance-value {
-        font-family: var(--font-mono);
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin: 12px 0 4px 0;
-        letter-spacing: -0.03em;
+    .commerce-nav .logout {
+        color: white !important;
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.15);
+        box-shadow: none;
     }
-    .crypto-address {
-        font-family: var(--font-mono);
-        background: rgba(0,0,0,0.2);
-        padding: 8px 12px;
-        border-radius: var(--radius-md);
-        font-size: 0.8rem;
-        color: var(--accent);
-        word-break: break-all;
-        border: 1px solid rgba(255,255,255,0.03);
-    }
-    /* Estructuras de Listas de Auditoría */
-    .tx-ledger-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-top: 16px;
-    }
-    .tx-row {
-        background: rgba(255,255,255,0.02);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        padding: 16px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .signature-badge {
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-weight: 500;
-    }
-    .signature-badge.valid {
-        background-color: var(--success-glow);
-        color: #10b981;
+    .commerce-nav .logout:hover {
+        background: rgba(255,255,255,0.2);
     }
 </style>
-<div class="nav" style="background: var(--accent);">
+
+<div class="nav commerce-nav">
     <span>Terminal Comercial Adherido: <strong>{{ session['username'] | capitalize }}</strong></span>
     <a href="{{ url_for('auth.logout') }}" class="logout">Desconectar TPV</a>
 </div>
 
 <h2>Arqueo de Caja (Depósitos Recibidos)</h2>
-<div class="grid">
+<div class="grid" style="margin-bottom: 28px;">
     <div class="card" style="border-top: 4px solid var(--accent);">
         <h3>Volumen de Tokens Acumulados</h3>
         <div class="balance">
             <span id="saldo-comercio">{{ balance_basica }}</span> 
-            <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>
+            <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>
         </div>
-        <span class="badge" style="background:#e0f2fe; color:#0284c7;">Pendientes de Liquidación Fiscal</span>
+        <span class="badge" style="background: var(--primary-glow) !important; color: var(--primary) !important; border: none !important; box-shadow: none;">Pendientes de Liquidación Fiscal</span>
     </div>
 </div>
 
-<div class="form-section" style="border-left: 6px solid var(--state);">
-    <h3 style="color: var(--primary-dark); margin-top: 0; margin-bottom: 10px;">Protocolo de Liquidación en Arcas Públicas</h3>
-    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px;">
-        Al liquidar sus fondos, el contrato inteligente transferirá el balance íntegro a la Hacienda Municipal. El Estado emitirá certificados de exención fiscal correspondientes y procederá a re-firmar los activos digitalmente para cerrar el ciclo de la economía circular.
+<div class="form-section" style="border-left: 5px solid var(--state-purple);">
+    <h3 style="color: var(--text-main); font-size: 1.15rem; font-weight: 700; margin-bottom: 10px;">Protocolo de Liquidación en Arcas Públicas</h3>
+    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 26px; line-height: 1.6;">
+        Al realizar el cierre de caja, el contrato automatizado consolidará e ingresará los fondos directos en la Hacienda Municipal. El sistema generará las exenciones fiscales equivalentes y re-firmará criptográficamente los activos para reinyectarlos al circuito municipal.
     </p>
     
     <form action="{{ url_for('auth.liquidar') }}" method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <button type="submit" style="background-color: var(--state);">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M16 18v-9"/><path d="M12 18v-9"/><path d="M8 18v-9"/><path d="M3 9l9-7 9 7v0H3z"/></svg>
-            Liquidar Caja y Solicitar Exenciones
+        <button type="submit" style="background: linear-gradient(180deg, var(--state-purple) 0%, #6d28d9 100%); box-shadow: 0 4px 6px rgba(124, 58, 237, 0.25);">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M16 18v-9"/><path d="M12 18v-9"/><path d="M8 18v-9"/><path d="M3 9l9-7 9 7v0H3z"/></svg>
+            Ejecutar Liquidación y Solicitar Exenciones
         </button>
     </form>
 </div>

@@ -6,30 +6,43 @@
     <title>{% block title %}Ledger Municipal Acorazado{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #05070f;
-            --bg-surface: #0c0f1d;
-            --bg-surface-elevated: #141933;
-            --primary: #3b82f6;
-            --primary-glow: rgba(59, 130, 246, 0.12);
-            --accent: #00f0ff;
-            --accent-glow: rgba(0, 240, 255, 0.08);
-            --success: #10b981;
-            --success-glow: rgba(16, 185, 129, 0.1);
-            --warning: #f59e0b;
-            --warning-glow: rgba(245, 158, 11, 0.1);
-            --error: #f43f5e;
-            --error-glow: rgba(244, 63, 94, 0.12);
-            --state-purple: #8b5cf6;
-            --text-main: #f8fafc;
-            --text-muted: #64748b;
-            --border-color: rgba(255, 255, 255, 0.05);
-            --radius-lg: 14px;
-            --radius-md: 8px;
-            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            /* Colores de Fondo y Superficie */
+            --bg-main: #f4f6fa;
+            --bg-surface: #ffffff;
+            --bg-surface-elevated: #f8fafc;
+            
+            /* Identidad y Estados */
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-glow: rgba(37, 99, 235, 0.1);
+            --accent: #0f172a;
+            --success: #16a34a;
+            --success-glow: rgba(22, 163, 74, 0.08);
+            --warning: #ea580c;
+            --warning-glow: rgba(234, 88, 12, 0.08);
+            --error: #dc2626;
+            --error-glow: rgba(220, 38, 38, 0.08);
+            --state-purple: #7c3aed;
+            
+            /* Tipografía y Bordes */
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #d1d5db;
+            --border-light: #e5e7eb;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --font-sans: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
+
+            /* Capas de Relieve y Sombras Profesionales (Multi-layered Depth) */
+            --relief-sm: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            --relief-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 1);
+            --relief-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 1);
+            --relief-button: 0 2px 4px rgba(37, 99, 235, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            --relief-input: inset 0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         * {
@@ -45,82 +58,72 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-        }
-
-        /* Iluminación perimetral de fondo de bajo contraste para evitar fatiga visual */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
-            top: -200px;
-            right: -200px;
-            z-index: -1;
-            pointer-events: none;
         }
 
         .container {
             width: 100%;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 32px 20px;
+            padding: 40px 20px;
             flex-grow: 1;
         }
 
-        /* ── NAVBAR ERGONÓMICA (.nav) ── */
+        /* NAVBAR PREMIUM CON RELIEVE DE CRISTAL */
         .nav {
             background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            padding: 14px 24px;
+            border: 1px solid var(--border-light);
+            padding: 18px 28px;
             border-radius: var(--radius-lg);
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 35px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            box-shadow: var(--relief-md);
         }
         .nav span {
             font-size: 0.95rem;
             font-weight: 500;
-            color: #cbd5e1;
+            color: var(--text-main);
         }
         .nav strong {
-            color: var(--accent);
-            font-weight: 700;
+            color: var(--primary);
+            font-weight: 600;
         }
 
-        /* Botón de desconexión unificado */
         .logout {
             color: var(--error) !important;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
-            padding: 8px 16px;
-            border: 1px solid rgba(244, 63, 94, 0.2);
+            letter-spacing: 0.04em;
+            padding: 10px 20px;
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-md);
-            background: rgba(244, 63, 94, 0.03);
-            transition: all 0.2s ease;
+            background: var(--bg-surface-elevated);
+            box-shadow: var(--relief-sm);
+            transition: all 0.15s ease;
         }
         .logout:hover {
             background: var(--error-glow);
             border-color: var(--error);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(220, 38, 38, 0.08);
+        }
+        .logout:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
         }
 
-        /* Encabezados legibles */
         h2 {
             font-size: 1.6rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 6px;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            color: var(--text-main);
         }
 
-        /* ── GRID DE COMPONENTES (.grid) ── */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -128,243 +131,273 @@
             margin-bottom: 35px;
         }
 
-        /* ── CONTROL ESTRICTO DE ICONOS (Evita que las imágenes se hagan gigantes) ── */
-        svg, img, .icon, .icon-lg, .icon-xl, .nav svg, .card svg, .tx-item svg {
-            width: 20px !important;
-            height: 20px !important;
-            max-width: 20px !important;
-            max-height: 20px !important;
+        /* SVGS INTEGRADOS */
+        svg, img, .icon, .icon-lg, .icon-xl {
+            width: 18px !important;
+            height: 18px !important;
             display: inline-block;
             vertical-align: middle;
             fill: none;
             stroke: currentColor;
-            stroke-width: 2;
+            stroke-width: 2.2;
             flex-shrink: 0;
         }
-        /* Iconos de balance destacados ligeramente mayores pero controlados */
-        .balance svg, .balance img, .icon-lg {
-            width: 28px !important;
-            height: 28px !important;
-            max-width: 28px !important;
-            max-height: 28px !important;
+        .balance svg, .icon-lg {
+            width: 26px !important;
+            height: 26px !important;
         }
 
-        /* ── TARJETAS CONTENEDORAS ESPACIOSAS (.card) ── */
+        /* TARJETAS CON RELIEVE ACENTUADO */
         .card {
             background: var(--bg-surface);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
-            padding: 24px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            padding: 26px;
+            box-shadow: var(--relief-lg);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
         }
         .card h3 {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
             color: var(--text-muted);
-            margin-bottom: 12px;
-            font-weight: 700;
+            margin-bottom: 14px;
+            font-weight: 600;
         }
 
-        /* Indicadores de Tipo de Moneda en Tarjetas */
-        .card.basica { border-left: 3px solid var(--warning); }
-        .card.bonificada { border-left: 3px solid var(--success); }
+        .card.basica { border-top: 4px solid var(--warning); }
+        .card.bonificada { border-top: 4px solid var(--success); }
 
-        /* Mapeo del Balance Numérico (.balance) */
         .balance {
             font-family: var(--font-mono);
             font-size: 2.2rem;
             font-weight: 700;
+            letter-spacing: -0.02em;
             color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 8px 0;
+            margin: 6px 0;
         }
 
-        /* Badges informativos de la UI */
-        .badge, [style*="background:#e0f2fe"], [style*="background:var(--primary-dark)"] {
-            font-size: 0.72rem !important;
+        /* BADGES ESTILIZADOS */
+        .badge {
+            font-size: 0.7rem !important;
             font-weight: 700;
-            padding: 4px 10px !important;
-            border-radius: 4px !important;
-            font-family: var(--font-mono);
+            padding: 6px 10px !important;
+            border-radius: 6px !important;
+            font-family: var(--font-sans);
             text-transform: uppercase;
+            letter-spacing: 0.02em;
             background: var(--bg-surface-elevated) !important;
-            color: var(--accent) !important;
-            border: 1px solid rgba(0, 240, 255, 0.15) !important;
+            color: var(--text-muted) !important;
+            border: 1px solid var(--border-light) !important;
+            box-shadow: var(--relief-sm);
             display: inline-block;
-            margin-top: 6px;
+            margin-top: 8px;
             width: fit-content;
         }
+        .badge.basica { background: var(--warning-glow) !important; color: var(--warning) !important; border-color: transparent !important; box-shadow: none; }
+        .badge.bonificada { background: var(--success-glow) !important; color: var(--success) !important; border-color: transparent !important; box-shadow: none; }
 
-        /* ── FORMULARIOS LIMPIOS Y CONFORTABLES ── */
+        /* CONTENEDORES Y FORMULARIOS */
+        .form-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 35px;
+            box-shadow: var(--relief-lg);
+        }
         .input-group, form div {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
         label {
             display: block;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.02em;
-            margin-bottom: 6px;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
         }
-        input[type="text"], input[type="number"], select {
+        
+        /* INPUTS BISELADOS INTERNOS */
+        input[type="text"], input[type="number"], input[type="password"], select {
             width: 100%;
             background: var(--bg-surface-elevated);
             border: 1px solid var(--border-color);
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: var(--radius-md);
-            color: white;
+            color: var(--text-main);
             font-size: 0.95rem;
-            font-family: var(--font-mono);
-            transition: border-color 0.2s ease;
+            font-family: var(--font-sans);
+            box-shadow: var(--relief-input);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         input:focus, select:focus {
             outline: none;
+            background: var(--bg-surface);
             border-color: var(--primary);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02), 0 0 0 4px var(--primary-glow);
         }
 
+        /* BOTONES MECÁNICOS 3D SENSIBLES AL TACTO */
         button, [type="submit"] {
             width: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            border: none;
-            padding: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 16px;
             border-radius: var(--radius-md);
-            font-weight: 700;
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-            transition: transform 0.1s ease, box-shadow 0.2s ease;
+            gap: 10px;
+            box-shadow: var(--relief-button);
+            transition: all 0.15s ease;
         }
         button:hover, [type="submit"]:hover {
+            filter: brightness(1.05);
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
         }
-        button:active, [type="submit"]:active { transform: translateY(0); }
+        button:active, [type="submit"]:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
-        /* Visor PEM de clave pública inyectada */
-        pre, textarea, [style*="font-family: monospace"] {
-            background: #04060b !important;
-            color: #34d399 !important;
-            border: 1px solid var(--border-color) !important;
+        pre {
+            background: #0f172a !important;
+            color: #38bdf8 !important;
+            border: 1px solid rgba(0,0,0,0.2) !important;
             border-radius: var(--radius-md) !important;
-            padding: 12px !important;
-            font-size: 0.8rem !important;
-            line-height: 1.4 !important;
+            padding: 18px !important;
+            font-size: 0.85rem !important;
+            font-family: var(--font-mono) !important;
+            line-height: 1.6 !important;
+            box-shadow: var(--relief-input);
             overflow-x: auto;
         }
 
-        /* ── COMPONENTE HISTORIAL / FILAS DEL LEDGER (.tx-item) ── */
+        /* TRANSACCIONES (LEDGER) */
         .tx-list, #tx-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-top: 16px;
+            gap: 14px;
+            margin-top: 18px;
         }
-        .tx-item, [class*="tx-item"] {
+        .tx-item {
             background: var(--bg-surface);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-light);
             border-radius: var(--radius-md);
-            padding: 14px 20px;
+            padding: 18px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: var(--relief-sm);
+            transition: all 0.2s ease;
+        }
+        .tx-item:hover {
+            transform: scale(1.005) translateY(-1px);
+            box-shadow: var(--relief-md);
+            background: var(--bg-surface-elevated);
         }
         .tx-details {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
         .tx-op {
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.95rem;
             color: var(--text-main);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         .tx-route {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
         .tx-amount {
             font-family: var(--font-mono);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
-        /* Estado del Par Criptográfico (Firma Válida) */
-        .firma-badge, [class*="firma-badge"], [style*="color: #10b981"] {
-            font-size: 0.72rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-family: var(--font-mono);
-            background: var(--success-glow) !important;
-            color: #34d399 !important;
-            border: 1px solid rgba(16, 185, 129, 0.2);
+        /* FIRMAS CRIPTOGRÁFICAS */
+        .firma-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            background: var(--bg-surface-elevated);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
         }
-        .firma-ko {
-            background: var(--error-glow) !important;
-            color: #fb7185 !important;
-            border: 1px solid rgba(244, 63, 94, 0.2);
+        .firma-badge.firma-ok {
+            background: #e6f4ea !important;
+            color: var(--success) !important;
+            border-color: #a3e635 !important;
+        }
+        .firma-badge.firma-ko {
+            background: #fce8e6 !important;
+            color: var(--error) !important;
+            border-color: #fca5a5 !important;
         }
 
-        /* Alertas Flasheadas del Framework */
+        /* ALERTAS FLASH */
         .flash-container { margin-bottom: 24px; }
         .flash-msg {
-            padding: 14px 18px;
+            padding: 16px 20px;
             border-radius: var(--radius-md);
             font-weight: 600;
             font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            border: 1px solid transparent;
+            gap: 12px;
+            margin-bottom: 12px;
+            box-shadow: var(--relief-md);
         }
-        .flash-msg.success { background-color: var(--success-glow); color: #34d399; border-color: rgba(16, 185, 129, 0.15); }
-        .flash-msg.error { background-color: var(--error-glow); color: #fb7185; border-color: rgba(244, 63, 94, 0.15); }
+        .flash-msg.success { background-color: #e6f4ea; color: var(--success); border-left: 5px solid var(--success); }
+        .flash-msg.error { background-color: #fce8e6; color: var(--error); border-left: 5px solid var(--error); }
 
-        /* Footer Técnico */
+        /* FOOTER */
         .system-footer {
             margin-top: auto;
-            padding: 20px 24px;
-            background-color: #04060b;
-            border-top: 1px solid var(--border-color);
+            padding: 28px;
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-light);
             text-align: center;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.8rem;
             color: var(--text-muted);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,1);
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="flash-container">
                     {% for category, msg in messages %}
                         <div class="flash-msg {{ category }}">
-                            <span style="width:6px; height:6px; border-radius:50%; background: currentColor;"></span>
+                            <span style="width:8px; height:8px; border-radius:50%; background: currentColor;"></span>
                             {{ msg }}
                         </div>
                     {% endfor %}
@@ -376,16 +409,15 @@
     </div>
 
     <footer class="system-footer">
-        <div>🔒 Entorno Criptográfico Multi-Rol — ISS 2026 UMA</div>
+        <div style="font-weight: 500;">🔒 Crypto Comunitaria</div>
         <div>
             <form action="{{ url_for('auth.reset') }}" method="POST" style="display: inline;">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <button type="submit" style="background: none; border: none; color: var(--error); cursor: pointer; font-family: var(--font-mono); font-weight: 600; box-shadow: none; padding: 0; width: auto; display: inline; font-size: 0.8rem;">
-                    [☣️ Forzar Reinicio del Estado Lógico]
+                <button type="submit" style="background: none; border: none; color: var(--error); cursor: pointer; font-family: var(--font-mono); font-weight: 700; box-shadow: none; padding: 0; width: auto; display: inline; font-size: 0.8rem; transition: none;">
+                    [☣️ Forzar Reinicio Estructural Lógico]
                 </button>
             </form>
         </div>
     </footer>
-
 </body>
 </html>

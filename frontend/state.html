@@ -3,80 +3,73 @@
 
 {% block content %}
 <style>
-    /* Cuadrícula de Datos de Alta Fidelidad */
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 24px;
-        margin-bottom: 32px;
+    .state-nav {
+        background: linear-gradient(180deg, #7c3aed 0%, #6d28d9 100%) !important;
+        border-color: #6d28d9 !important;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2), inset 0 1px 0 rgba(255,255,255,0.2) !important;
     }
-    .balance-card {
-        background: radial-gradient(circle at top left, var(--bg-surface-elevated), var(--bg-surface));
-        border: 1px solid var(--border-color);
-        padding: 24px;
+    .state-nav span, .state-nav strong {
+        color: white !important;
+    }
+    .state-nav .logout {
+        color: white !important;
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: none;
+    }
+    .state-nav .logout:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+    .card.total-m0 {
+        border-top: 4px solid var(--primary);
+    }
+    .table-container {
+        background: var(--bg-surface);
         border-radius: var(--radius-lg);
-        position: relative;
         overflow: hidden;
+        border: 1px solid var(--border-light);
+        margin-bottom: 40px;
+        box-shadow: var(--relief-lg);
     }
-    .balance-value {
-        font-family: var(--font-mono);
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin: 12px 0 4px 0;
-        letter-spacing: -0.03em;
+    .state-table {
+        width: 100%;
+        border-collapse: collapse;
     }
-    .crypto-address {
-        font-family: var(--font-mono);
-        background: rgba(0,0,0,0.2);
-        padding: 8px 12px;
-        border-radius: var(--radius-md);
-        font-size: 0.8rem;
-        color: var(--accent);
-        word-break: break-all;
-        border: 1px solid rgba(255,255,255,0.03);
-    }
-    /* Estructuras de Listas de Auditoría */
-    .tx-ledger-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-top: 16px;
-    }
-    .tx-row {
-        background: rgba(255,255,255,0.02);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
+    .state-table th {
+        background-color: var(--bg-surface-elevated);
         padding: 16px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .signature-badge {
-        font-family: var(--font-mono);
+        color: var(--text-muted);
         font-size: 0.75rem;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: inset 0 -1px 0 var(--border-light);
     }
-    .signature-badge.valid {
-        background-color: var(--success-glow);
-        color: #10b981;
+    .state-table td {
+        padding: 16px;
+        border-bottom: 1px solid var(--border-light);
+        font-size: 0.95rem;
+    }
+    .state-table tr:last-child td {
+        border-bottom: none;
     }
 </style>
-<div class="nav" style="background: var(--state);">
+
+<div class="nav state-nav">
     <span>Autoridad Certificadora: <strong>Ministerio de Hacienda / Ayuntamiento</strong></span>
     <a href="{{ url_for('auth.logout') }}" class="logout">Cerrar Sesión Root</a>
 </div>
 
-<h2>Auditoría Global de la Red (Block Explorer)</h2>
+<h2 style="margin-bottom: 24px;">Auditoría Global de la Red (Block Explorer)</h2>
 <div class="grid">
-    <div class="card" style="border: 1px solid var(--primary-dark);">
+    <div class="card total-m0">
         <h3>Masa Monetaria Total (M0)</h3>
         <div class="balance">
             <span id="global-circulante">{{ global_data.total_circulante }}</span> 
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>
         </div>
-        <span class="badge" style="background:var(--primary-dark); color:white;">Conservación Absoluta</span>
+        <span class="badge" style="background: var(--primary-glow) !important; color: var(--primary) !important; border: none !important; box-shadow: none;">Conservación Absoluta</span>
     </div>
     <div class="card basica">
         <h3>Circulante Básico (Degradable)</h3>
@@ -88,39 +81,30 @@
     </div>
 </div>
 
-<div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border-color); margin-bottom: 40px;">
-    <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+<div class="table-container">
+    <table class="state-table">
         <thead>
-            <tr style="background-color: #f8fafc; border-bottom: 2px solid var(--border-color);">
-                <th style="padding: 16px; width: 25%; text-align: left; color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase;">Dirección (Wallet)</th>
-                <th style="padding: 16px; width: 25%; text-align: left; color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase;">Clasificación</th>
-                
-                <th style="padding: 16px; width: 25%; text-align: right; color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase; border-left: 1px solid var(--border-color);">Fondo Básico</th>
-                <th style="padding: 16px; width: 25%; text-align: right; color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase; border-left: 1px solid #e0e7ff;">Fondo Bonificado</th>
+            <tr>
+                <th style="text-align: left; width: 25%;">Dirección (Wallet)</th>
+                <th style="text-align: left; width: 25%;">Clasificación</th>
+                <th style="text-align: right; width: 25%;">Fondo Básico</th>
+                <th style="text-align: right; width: 25%;">Fondo Bonificado</th>
             </tr>
         </thead>
         <tbody>
             {% for user, info in global_data.usuarios.items() %}
-            <tr style="border-bottom: 1px solid var(--border-color);">
-                <td style="padding: 16px; font-weight: 600; color: var(--primary-dark);">{{ user | capitalize }}</td>
-                <td style="padding: 16px;">
-                    <span class="badge {{ 'state' if info.role == 'state' else 'bonificada' if info.role == 'citizen' else 'basica' }}" style="margin-top:0;">
+            <tr>
+                <td style="font-weight: 600; color: var(--text-main);">{{ user | capitalize }}</td>
+                <td>
+                    <span class="badge {% if info.role == 'state' %}state{% elif info.role == 'citizen' %}bonificada{% else %}basica{% endif %}" style="margin-top:0;">
                         {{ info.role | upper }}
                     </span>
                 </td>
-                
-                <td style="padding: 16px; border-left: 1px solid var(--border-color);">
-                    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; font-family: 'Courier New', monospace; font-weight: 600; color: var(--warning);">
-                        <span id="user-basica-{{ user }}">{{ info.basicas }}</span> 
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>
-                    </div>
+                <td style="text-align: right; font-family: var(--font-mono); font-weight: 700; color: var(--warning);">
+                    <span id="user-basica-{{ user }}">{{ info.basicas }}</span>
                 </td>
-                
-                <td style="padding: 16px; border-left: 1px solid #e0e7ff; background-color: #f8fafc;">
-                    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; font-family: 'Courier New', monospace; font-weight: 600; color: var(--success);">
-                        <span id="user-bonificada-{{ user }}">{{ info.bonificadas }}</span> 
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
-                    </div>
+                <td style="text-align: right; font-family: var(--font-mono); font-weight: 700; color: var(--success);">
+                    <span id="user-bonificada-{{ user }}">{{ info.bonificadas }}</span>
                 </td>
             </tr>
             {% endfor %}
@@ -128,48 +112,45 @@
     </table>
 </div>
 
-<div style="display: flex; gap: 20px; flex-wrap: wrap;">
-    <div class="card state" style="flex: 1; border: 2px solid var(--state); min-width: 250px;">
+<div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 35px;">
+    <div class="card" style="flex: 1; border-top: 4px solid var(--state-purple); min-width: 280px;">
         <h3>Reserva del Tesoro Municipal</h3>
-        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 15px;">Masa monetaria absorbida de la oxidación pasiva y recaudada vía liquidaciones comerciales, lista para re-emisión.</p>
-        <div class="balance" style="color: var(--state);">
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 15px; line-height: 1.5;">Masa monetaria absorbida de la oxidación pasiva y recaudada vía liquidaciones comerciales.</p>
+        <div class="balance" style="color: var(--state-purple);">
             <span id="arcas-bonificadas">{{ global_data.usuarios['estado'].bonificadas }}</span> 
-            <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+            <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
         </div>
     </div>
 
-    <div class="form-section" style="flex: 2; margin-bottom: 0; min-width: 300px;">
-        <h3 style="color: var(--primary-dark); margin-top: 0;">Inyección de Liquidez Pública</h3>
+    <div class="form-section" style="flex: 2; margin-bottom: 0; min-width: 320px;">
+        <h3 style="color: var(--text-main); font-size: 1rem; font-weight: 700; margin-bottom: 16px;">Inyección de Liquidez Pública</h3>
         <form action="{{ url_for('auth.emitir') }}" method="POST">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <div class="form-group" style="flex: 1; min-width: 200px;">
-                    <label for="ciudadano">Ciudadano Beneficiario:</label>
+                <div class="form-group" style="flex: 1; min-width: 180px;">
+                    <label for="ciudadano">Ciudadano Beneficiario</label>
                     <select id="ciudadano" name="ciudadano" required>
                         {% for c in ciudadanos %}
                             <option value="{{ c }}">{{ c | capitalize }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group" style="flex: 1; min-width: 150px;">
-                    <label for="monto">Asignación:</label>
+                <div class="form-group" style="flex: 1; min-width: 120px;">
+                    <label for="monto">Asignación</label>
                     <input type="number" id="monto" name="monto" step="0.01" min="0.01" required>
                 </div>
             </div>
-            <button type="submit" style="background-color: var(--state);">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <button type="submit" style="background: linear-gradient(180deg, var(--state-purple) 0%, #6d28d9 100%); box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                 Firmar Token y Desembolsar
             </button>
         </form>
     </div>
 </div>
 
-<!-- ========================================== -->
-<!-- LEDGER EN VIVO (AUDITORÍA VISUAL)          -->
-<!-- ========================================== -->
-<div class="tx-feed">
-    <h3>
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+<div class="form-section">
+    <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 10px;">
+        <svg class="icon" style="color: var(--primary);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
         Libro Mayor Distribuido (Últimas Operaciones)
     </h3>
     <div id="tx-list">
@@ -178,8 +159,8 @@
 </div>
 
 <script>
-    const svgBasica = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>`;
-    const svgBonificada = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>`;
+    const svgBasica = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>`;
+    const svgBonificada = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>`;
 
     setInterval(() => {
         fetch('/api/estado_en_vivo')
@@ -187,12 +168,6 @@
             .then(data => {
                 if(data.error) return;
                 
-                // 1. Actualizar Saldos Individuales
-                if(document.getElementById('saldo-basico')) document.getElementById('saldo-basico').innerText = data.basicas.toFixed(2);
-                if(document.getElementById('saldo-bonificado')) document.getElementById('saldo-bonificado').innerText = data.bonificadas.toFixed(2);
-                if(document.getElementById('saldo-comercio')) document.getElementById('saldo-comercio').innerText = data.basicas.toFixed(2);
-
-                // 2. Actualizar Tabla Global (Solo en panel del Estado)
                 if(data.global_data) {
                     if(document.getElementById('arcas-bonificadas')) document.getElementById('arcas-bonificadas').innerText = data.global_data.usuarios['estado'].bonificadas.toFixed(2);
                     if(document.getElementById('global-circulante')) document.getElementById('global-circulante').innerText = data.global_data.total_circulante.toFixed(2);
@@ -207,7 +182,6 @@
                     }
                 }
 
-                // 3. Renderizar el Ledger en Vivo
                 const txList = document.getElementById('tx-list');
                 if(data.transacciones && data.transacciones.length > 0) {
                     txList.innerHTML = data.transacciones.map(tx => {
@@ -219,14 +193,14 @@
                             ? `<span class="firma-badge firma-ok">✓ Firma válida</span>`
                             : tx.firma_valida === 0
                                 ? `<span class="firma-badge firma-ko">✗ Firma inválida</span>`
-                                : `<span class="firma-badge firma-na">— Sin firma</span>`;
+                                : `<span class="firma-badge">— Sin firma</span>`;
                         return `
                         <div class="tx-item">
                             <div class="tx-details">
                                 <div class="tx-op">${tx.operacion} ${firmaHtml}</div>
                                 <div class="tx-route">
                                     <strong>${tx.remitente}</strong> 
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                                     <strong>${tx.destinatario}</strong>
                                     <span style="color:#cbd5e1;">|</span> ${tx.fecha}
                                 </div>
